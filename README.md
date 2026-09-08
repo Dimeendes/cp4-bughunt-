@@ -33,7 +33,7 @@
 | bug01 | O cálculo de preço retorna 9.90 para um documentário, quando a regra diz que deveria ser gratuito. | `Documentario.java` (linha 16). Documentário herda o valor padrão da superclasse devido à ausência do método. | Adicionado override retornando 0.0. | Aula 8/9 — Herança/Polimorfismo (override ausente). |
 | bug02 | Usuário com créditos recebe erro ao alugar algo barato, e usuário sem saldo consegue alugar algo caro. | `Usuario.java` (linha 28). A comparação em `temCreditosSuficientes` (preco >= this.creditos) estava invertida. | Invertida a comparação para creditos >= preco. | Lógica condicional / regra de negócio (saldo). |
 | bug03 | Uma série sempre custa 9.90 fixo, ignorando o preço correto pelas temporadas. | `Serie.java` (linha 19). O método tem um parâmetro extra (desconto), fazendo overload em vez de override. | Removido parâmetro extra e adicionado @Override. | Aula 7 — Override vs Overload (pergunta 4). |
-| bug04 | | | | |
+| bug04 |Busca por ID inexistente retorna 200 OK vazio em vez de 404. |`ConteudoController.java` (linhas 31-40). Bloco try/catch vazio engolia a exceção e retornava null. |Removido try/catch para exceção propagar.[cite: 1] |Aula 11 — Tratamento de exceções. |
 | bug05 | | | | |
 | bug06 | | | | |
 | bug07 | | | | |
@@ -41,6 +41,7 @@
 | bug09 | | | | |
 | bug10 | | | | |
 | bug11 | | | | |
+| bug12 | | | | |
 ## Parte 2 — Ajustes de Clean Code
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
