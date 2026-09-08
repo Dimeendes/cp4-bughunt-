@@ -18,7 +18,7 @@
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | 8 / 12 |
+| **Total de bugs corrigidos** | 12 / 12 |
 | **Total de ajustes de Clean Code** | ___ / 6 |
 
 ---
@@ -38,10 +38,10 @@
 | bug06 |O construtor de Série não chama super(...), ao cadastrar uma série, ela é salva sem título, categoria, duração, classificação etária e disponibilidade. |arquivo model/Serie.java, linhas 14-15. | adiciona o super(...) com os atributos da classe mãe. |Aula 6 (Herança) - uso obrigatório de super nas classes filhas. |
 | bug07 |Busca por categoria manual comparando Strings com == . |arquivo controller/ConteudoController.java, método listarPorCategoria, linha 44.| usa findByCategoria do repository em vez de comparar String com == manualmente" . |Aula 13 (Spring Boot) - Spring Data JPA — Repository. |
 | bug08 |Ao alugar um conteúdo com classificação indicativa maior que a idade do usuário, a API responde com erro genérico do servidor (500) e não devolve uma mensagem clara |arquivo exception/GlobalExceptionHandler.java, linha 11 | adiciona o  handler @ExceptionHandler(ClassificacaoIndicativaException.class) no GlobalExceptionHandler | Aula 11 (Tratamento de Exceções ) - exceções checked e unchecked .|
-| bug09 | | | | |
-| bug10 | | | | |
-| bug11 | | | | |
-| bug12 | | | | |
+| bug09 |Ao aplicar a promoção em um filme, seu valor era reajustado para 1,2x do original, aumentando em 20% | Arquivo `Filme.java` (linha 25).| Alterada lógica que multiplicava o valor original de 1.2 para 0.8 (reduzindo em 20% o valor, como esperado)| Lógica matemática / regra de negócio (promoções)|
+| bug10 |O atributo "nome" estava sem o referenciador "this", fazendo o atributo não ser armazenado corretamente | Arquivo `Usuario.java` (linha 23). | Adicionado referenciador "this." ao atributo nome do construtor de usuário | Aula 02 (Métodos e comportamentos) - Referência a atributos  |
+| bug11 | Ao cadastrar uma nova série, são esperados 6 argumentos, mas somente 5 estavam sendo enviados, faltando o argumento "isDisponivel" | Arquivo `ConteudoController.java` (linha 62). | Adicionado o argumento 'serie.isDisponivel()' a instância de serie | Aula 04 (Construtores) - parâmetros de classe|
+| bug12 | Ao calcular o preço de aluguel de um novo item, o fato de ser promocionavel era ignorado e seu valor se mantinha como o original | Arquivo `Usuario.java` (linha 44) | Alterado o método calcularPrecoAluguel() para calcularPrecoPromocional(), que verifica se o item possui promoção e aplica o preço promocional quando necessário, mantendo o preço original caso contrário.| Aula 07 (muitas formas polimorfismo de sobrescrita) / Regra de negócio (promoções)|
 ## Parte 2 — Ajustes de Clean Code
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
