@@ -46,7 +46,7 @@
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
-| clean01 | Arquivo `Conteudo.java` (linha 16) | Deixava uma variável pública | Alterei o atributo de público para privado |
+| clean01 | Arquivo `Conteudo.java` (linha 16) | Deixava uma variável pública | Alterei o atributo duracaoMinutos de público para privado |
 | clean02 | Arquivo `ConteudoController.java` (linhas 75-88 | Código morto | Removi parte do código que não estava sendo utilizada |
 | clean03 | Arquivo `ConteudoController.java` (linhas 53, 61 e 70) | Quebra de encapsulamento | Troquei o acesso direto que as funções de cadastrar filme, série e documentário utilizavam do atributo duracaoMinutos pelo getter |
 | clean04 | | | |
