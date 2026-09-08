@@ -41,7 +41,7 @@ public class Usuario {
                     + " (classificação " + c.getClassificacaoEtaria() + " anos)");
         }
 
-        double p = c.calcularPrecoAluguel();
+        double p = c.calcularPrecoPromocional();
 
         if (!temCreditosSuficientes(p)) {
             throw new CreditosInsuficientesException("Créditos insuficientes para alugar " + c.getTitulo());
