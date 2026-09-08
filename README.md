@@ -18,7 +18,7 @@
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | 3 / 12 |
+| **Total de bugs corrigidos** | 8 / 12 |
 | **Total de ajustes de Clean Code** | ___ / 6 |
 
 ---
@@ -34,10 +34,10 @@
 | bug02 | Usuário com créditos recebe erro ao alugar algo barato, e usuário sem saldo consegue alugar algo caro. | `Usuario.java` (linha 28). A comparação em `temCreditosSuficientes` (preco >= this.creditos) estava invertida. | Invertida a comparação para creditos >= preco. | Lógica condicional / regra de negócio (saldo). |
 | bug03 | Uma série sempre custa 9.90 fixo, ignorando o preço correto pelas temporadas. | `Serie.java` (linha 19). O método tem um parâmetro extra (desconto), fazendo overload em vez de override. | Removido parâmetro extra e adicionado @Override. | Aula 7 — Override vs Overload (pergunta 4). |
 | bug04 |Busca por ID inexistente retorna 200 OK vazio em vez de 404. |`ConteudoController.java` (linhas 31-40). Bloco try/catch vazio engolia a exceção e retornava null. |Removido try/catch para exceção propagar.] |Aula 11 — Tratamento de exceções. |
-| bug05 | | | | |
-| bug06 | | | | |
-| bug07 | | | | |
-| bug08 | | | | |
+| bug05 |O usuário não recebe um id gerado, pois ao salvar um usuário novo, o id retornado vem null. | arquivo  model/Usuario.java, linhas 11-12 .|Adiciona @GeneratedValue(strategy = GenerationType.IDENTITY).|Aula 13 (Spring Boot) - geração automática de ID.|
+| bug06 |O construtor de Série não chama super(...), ao cadastrar uma série, ela é salva sem título, categoria, duração, classificação etária e disponibilidade. |arquivo model/Serie.java, linhas 14-15. | adiciona o super(...) com os atributos da classe mãe. |Aula 6 (Herança) - uso obrigatório de super nas classes filhas. |
+| bug07 |Busca por categoria manual comparando Strings com == . |arquivo controller/ConteudoController.java, método listarPorCategoria, linha 44.| usa findByCategoria do repository em vez de comparar String com == manualmente" . |Aula 13 (Spring Boot) - Spring Data JPA — Repository. |
+| bug08 |Ao alugar um conteúdo com classificação indicativa maior que a idade do usuário, a API responde com erro genérico do servidor (500) e não devolve uma mensagem clara |arquivo exception/GlobalExceptionHandler.java, linha 11 | adiciona o  handler @ExceptionHandler(ClassificacaoIndicativaException.class) no GlobalExceptionHandler | Aula 11 (Tratamento de Exceções ) - exceções checked e unchecked .|
 | bug09 | | | | |
 | bug10 | | | | |
 | bug11 | | | | |
