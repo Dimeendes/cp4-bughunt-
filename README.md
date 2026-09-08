@@ -5,18 +5,20 @@
 
 ## Identificação
 
-**Grupo:** ___
+**Grupo:** Grupo 21
 
 | Integrante | RM | Turma |
 |---|---|---|
-| | | |
-| | | |
-| | | |
-| | | |
+| Giovanni de Lela Anjos Costa | RM563066 | 2CCPG|
+| Thiago Sobral de Alvarenga | RM562695 | 2CCPG |
+| Pedro Miranda Campos Riato | RM562117 | 2CCPG |
+| Gabriel Hiro Nakamura | RM562221 | 2CCPG |
+| Diego Antonio Silva Mendes | RM565509 | 2CCPG |
+| Israel Karacsony de Camargo Nunes | RM563435 | 2CCPG |
 
 | Campo | |
 |---|---|
-| **Total de bugs corrigidos** | ___ / 12 |
+| **Total de bugs corrigidos** | 3 / 12 |
 | **Total de ajustes de Clean Code** | ___ / 6 |
 
 ---
@@ -28,9 +30,9 @@
 
 | # | Sintoma observado (o que fiz/vi) | Causa raiz (arquivo e linha aproximada) | Correção aplicada | Conceito da disciplina |
 |---|---|---|---|---|
-| bug01 | | | | |
-| bug02 | | | | |
-| bug03 | | | | |
+| bug01 | O cálculo de preço retorna 9.90 para um documentário, quando a regra diz que deveria ser gratuito. | `Documentario.java` (linha 16). Documentário herda o valor padrão da superclasse devido à ausência do método. | Adicionado override retornando 0.0. | Aula 8/9 — Herança/Polimorfismo (override ausente). |
+| bug02 | Usuário com créditos recebe erro ao alugar algo barato, e usuário sem saldo consegue alugar algo caro. | `Usuario.java` (linha 28). A comparação em `temCreditosSuficientes` (preco >= this.creditos) estava invertida. | Invertida a comparação para creditos >= preco. | Lógica condicional / regra de negócio (saldo). |
+| bug03 | Uma série sempre custa 9.90 fixo, ignorando o preço correto pelas temporadas. | `Serie.java` (linha 19). O método tem um parâmetro extra (desconto), fazendo overload em vez de override. | Removido parâmetro extra e adicionado @Override. | Aula 7 — Override vs Overload (pergunta 4). |
 | bug04 | | | | |
 | bug05 | | | | |
 | bug06 | | | | |
@@ -39,8 +41,6 @@
 | bug09 | | | | |
 | bug10 | | | | |
 | bug11 | | | | |
-| bug12 | | | | |
-
 ## Parte 2 — Ajustes de Clean Code
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
