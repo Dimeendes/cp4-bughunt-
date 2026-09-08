@@ -19,7 +19,7 @@
 | Campo | |
 |---|---|
 | **Total de bugs corrigidos** | 12 / 12 |
-| **Total de ajustes de Clean Code** | ___ / 6 |
+| **Total de ajustes de Clean Code** | 3 / 6 |
 
 ---
 
@@ -46,9 +46,9 @@
 
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
-| clean01 | | | |
-| clean02 | | | |
-| clean03 | | | |
+| clean01 | Arquivo `Conteudo.java` (linha 16) | Deixava uma variável pública | Alterei de pública para privada |
+| clean02 | Arquivo `ConteudoController.java` (linhas 75-88 | Código morto | Removi parte do código que não estava sendo utilizada |
+| clean03 | Arquivo `ConteudoController.java` (linhas 53, 61 e 70) | Quebra de encapsulamento | Troquei o acesso direto que a funçao utilizava pelo getter |
 | clean04 | | | |
 | clean05 | | | |
 | clean06 | | | |
