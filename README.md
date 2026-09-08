@@ -47,11 +47,11 @@
 | # | Onde estava | Qual princípio/boas práticas era violado | O que eu mudei |
 |---|---|---|---|
 | clean01 | Arquivo `Conteudo.java` (linha 16) | Deixava uma variável pública | Alterei o atributo duracaoMinutos de público para privado |
-| clean02 | Arquivo `ConteudoController.java` (linhas 75-88 | Código morto | Removi parte do código que não estava sendo utilizada |
+| clean02 | Arquivo `ConteudoController.java` (linhas 75-88) | Código morto | Removi parte do código que não estava sendo utilizada |
 | clean03 | Arquivo `ConteudoController.java` (linhas 53, 61 e 70) | Quebra de encapsulamento | Troquei o acesso direto que as funções de cadastrar filme, série e documentário utilizavam do atributo duracaoMinutos pelo getter |
-| clean04 | Arquivo `Usuario.java` | Método `alugar` concentrava validação, débito e impressão do recibo em um único bloco, quebrando responsabilidade única | Dividi a lógica em métodos menores para manter cada responsabilidade separada |
-| clean05 | Arquivo `ConteudoController.java` | Duplicação de lógica na criação de filmes, séries e documentários | Extraí a criação dos objetos para métodos privados, deixando o controller mais enxuto |
-| clean06 | Arquivo `ConteudoController.java` | Import e código não utilizados | Removi o `ArrayList` e mantive o controller com apenas o necessário |
+| clean04 | Arquivo `Usuario.java` (linhas 37-69) | Método `alugar` concentrava validação, débito e impressão do recibo em um único bloco, quebrando responsabilidade única | Dividi a lógica em `validarClassificacao`, `validarCreditos` e `emitirRecibo`, deixando cada responsabilidade separada |
+| clean05 | Arquivo `ConteudoController.java` (linhas 50-85) | Duplicação de lógica na criação de filmes, séries e documentários | Extraí a criação dos objetos para os métodos `criarFilme`, `criarSerie` e `criarDocumentario`, deixando o controller mais enxuto |
+| clean06 | Arquivo `ConteudoController.java` (linhas 1-12) | Import e código não utilizados | Removi o `import java.util.ArrayList;` e mantive o controller com apenas o necessário |
 
 ---
 
