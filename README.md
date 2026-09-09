@@ -66,11 +66,15 @@ usa `ConteudoRepository`). Explique por que o Spring precisa gerenciar esses obj
 em vez de criarmos com `new ConteudoRepository()`. O que exatamente o Spring faz ao
 injetar um bean, e por que isso não funcionaria com um `new` comum?
 
+R: O Spring precisa gerenciar esses objetos porque o Repository é um bean, que depende da infraestrutura do Spring Data JPA para realizar operações no banco. Quando inicia a aplicação, o Spring cria e gerencia uma instância desse Repository e depois a coloca no controller. Assim, quando é usado conteudoRepository.findAll(), estamos utilizando um objeto já configurado pelo framework. Já um new ConteudoRepository() não funcionaria porque ConteudoRepository é uma interface, e sua implementação é criada pelo Spring Data JPA. Por isso, não funcionaria com um 'new' comum.
+
 ### 2. JDBC vs Spring Data JPA (Aulas 12 e 13)
 Na Aula 12 escrevemos um `ProdutoDAO` na mão com `Connection`, `PreparedStatement` e
 `ResultSet`. Aqui o `ConteudoRepository` tem 2 linhas e faz CRUD completo. Compare as
 duas abordagens: o que o Spring Data JPA automatiza, o que o JDBC/DAO ainda resolve
 melhor, e como o `findByCategoria` consegue funcionar sem implementação.
+
+R: O Spring Data JPA automatiza grande parte do trabalho manual feito na aula 12. Em vez de escrever manualmente o SQL e controlar a conexão, com a interface ConteudoRepository, métodos básicos como criar, ler, atualizar e deletar conteúdos já são disponibilizados pelo próprio String. O JDBC/DAO ainda é mais interessante quando precisamos de consultas SQL muito específicas ou de maior controle sobre a operação no banco de dados. Já o findByCategoria funciona sem implementação porque o Spring Data JPA interpreta o nome do método, identifica o atributo 'categoria' e cria automaticamente a consulta correspondente.
 
 ### 3. Exceções checked vs unchecked (Aula 11)
 A `ClassificacaoIndicativaException` estourava como um erro genérico do servidor,
@@ -78,10 +82,14 @@ sem mensagem útil para o cliente. Explique a diferença entre `extends Exceptio
 `extends RuntimeException` no contexto desse bug, e como você fez a mensagem da
 regra (classificação indicativa) chegar de forma clara ao cliente da API.
 
+R: No contexto desse bug, o fato da 'ClassificacaoIndicativaException' originalmente estender Exception, contribui para o tratamento inadequado da exceção, o que acabava chegando ao cliente como um erro genérico. Porém, a grande diferença ao utilizar RuntimeException é que a exceção passa a ser unchecked e pode se propagar pela aplicação sem obrigar cada método a utilizar throws. Para a mensagem da regra chegar de forma clara ao cliente da API, a solução do grupo foi tratar essa exceção no GlobalExceptionHandler com @ExceptionHandler. Desse modo, a mensagem criada na regra de negócio, informando que o usuário não pode assistir ao conteúdo pela classificaçãoo indicativa, pode ser devolvida de forma clara pela API.
+
 ### 4. Sobrescrita vs sobrecarga (Aula 7)
 Um dos bugs compilava sem nenhum erro: o método da `Serie` parecia sobrescrever
 `calcularPrecoAluguel`, mas na verdade sobrecarregava. Explique a diferença entre
 override e overload nesse caso e por que a anotação `@Override` teria impedido o bug.
+
+R: O bug da Serie aconteceu porque seu método calcularPrecoAluguel recebeu um parâmetro double desconto, enquanto o método da classe Conteudo não recebe parâmetros. Como as assinaturas são diferentes, isso caracteriza overload, e não override. Por isso, quando o sistema chama calcularPrecoAluguel() sem argumento, o método da classe Conteudo continua sendo utilizado e retorna o preço padrão de 9.90. A anotação override teria impedido o bug, pois com ela desde o começo, o compilador "avisaria" sobre o erro porque aquele método não estaria sobrescrevendo nenhum método da superclasse.
 
 ### 5. Onde blindar o objeto? (Aulas 3, 4 e 13)
 Vimos bugs de dados inválidos aceitos (duração negativa, créditos negativos, campos
@@ -89,11 +97,15 @@ nulos). Em quais lugares (construtor, setter, método do model) cada tipo de val
 deve ficar? Justifique usando os bugs que você encontrou e explique por que validar só
 em um lugar não foi suficiente.
 
+R: No bug02, por exemplo, a regra de verificar se o usuário possui créditos suficientes pertence ao método de negócio temCreditosSuficientes(), que foi corrigido para comparar creditos >= preco. Já valores que não podem ser negativos, como duração e créditos, devem ser validados no construtor e nos setters, pois podem ser definidos na criação e também alterados depois. O bug06, por exemplo, também mostra a importância de proteger a criação do objeto: o construtor de Serie precisava chamar super(...) para que os atributos herdados fossem corretamente inicializados. Porém, regras que dependem do contexto, como a própria regra de classificação indicativa, devem ficar no método de negócio responsável pelo aluguel, como Usuario.alugar(). Ou seja, cada ponto protege o objeto contra um tipo diferente de estado inválido.
+
 ### 6. Abstração e interface (Aulas 8 e 9)
 `Conteudo` é abstrata e `Promocionavel` é uma interface. Explique a diferença de
 propósito entre as duas nesse projeto e o que mudaria no código se o Documentário
 passasse a ter promoções — quais classes/linhas seriam tocadas e quais ficariam
 intactas? O que isso diz sobre o design do sistema?
+
+R: No projeto, Conteudo concentra características comuns aos diferentes conteúdos, como título, categoria, duração, classificação e disponibilidade. Já Promocionavel representa um comportamento específico, que no caso é a possibilidade de aplicar uma promoção. Se o Documentario passasse a ter promoções, ele poderia implementar Promocionavel e fornecer o método aplicarPromocao(), sem precisar alterar Filme, Serie ou a própria regra geral de calcularPrecoPromocional(). Assim, o design ficaria mais flexível para incorporar novos tipos de conteúdo ou comportamentos, visto que a interface permite adicionar um comportamento a diferentes classes sem criar uma dependência forte entre elas.
 
 ---
 
